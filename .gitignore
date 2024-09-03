@@ -1,0 +1,10 @@
+# Игнорирование node_modules
+node_modules/
+# Игнорирование json файлов
+json/
+# Игнорирование тестовых скриптов
+js/Test/
+# Игнорирование .ssl
+.ssl/
+# Игнорирование Mysql
+js/Data/Mysql.js
