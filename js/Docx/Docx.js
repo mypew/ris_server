@@ -132,23 +132,35 @@ class Docx {
             await this.SaveForm(form, key);
             return 0;
         }
-        let date_today = new Date();
+
+        if(author_reference.id_commission != null) {
+            author_reference.commission = (await Mysql.Request(`SELECT * FROM bree7e_cris_commissions WHERE id=${author_reference.id_commission}`))[0];
+        } else {
+            author_reference.commission = {};
+            author_reference.commission.name = "";
+            author_reference.commission.president = "";
+            author_reference.commission.inspector = "";
+        }
+
+        if(author_reference.id_commission_member != null) {
+            author_reference.commission_member = (await Mysql.Request(`SELECT * FROM users WHERE id=${author_reference.id_commission_member}`))[0];
+            author_reference.commission_member.fio = `${author_reference.commission_member.surname} ${author_reference.commission_member.name[0]}.${author_reference.commission_member.middlename[0]}.`;
+        } else {
+            author_reference.commission_member = {};
+            author_reference.commission_member.fio = ``;
+        }
+
+        if(author_reference.id_commission_patent_member != null) {
+            author_reference.commission_patent_member = (await Mysql.Request(`SELECT * FROM users WHERE id=${author_reference.id_commission_patent_member}`))[0];
+            author_reference.commission_patent_member.fio = `${author_reference.commission_patent_member.surname} ${author_reference.commission_patent_member.name[0]}.${author_reference.commission_patent_member.middlename[0]}.`;
+        } else {
+            author_reference.commission_patent_member = {};
+            author_reference.commission_patent_member.fio = ``;
+        }
         // Данные
 
-        // Ввод {day}
-        form.xml = await this.ReplacementParam(form.xml, "{day}", date_today.getDate());
-        // Ввод {day}
-
-        // Ввод {month}
-        form.xml = await this.ReplacementParam(form.xml, "{month}", await Month.IntToStr(date_today.getMonth()));
-        // Ввод {month}
-
-        // Ввод {year}
-        form.xml = await this.ReplacementParam(form.xml, "{year}", date_today.getFullYear());
-        // Ввод {year}
-
         // Ввод {expert}
-        form.xml = await this.ReplacementParam(form.xml, "{expert}", author_reference.expert);
+        form.xml = await this.ReplacementParam(form.xml, "{expert}", author_reference.member);
         // Ввод {expert}
 
         // Ввод {type_and_name}
@@ -187,17 +199,21 @@ class Docx {
         form.xml = await this.ReplacementParam(form.xml, "{lock}", author_reference.is_lock ? 'Есть запрет Роспатента на публикацию в открытой печати.' : 'Нет запрета Роспатента на публикацию в открытой печати.');
         // Ввод {lock}
 
-        // Ввод {day2}
-        form.xml = await this.ReplacementParam(form.xml, "{day2}", date_today.getDate());
-        // Ввод {day2}
+        // Ввод {member}
+        form.xml = await this.ReplacementParam(form.xml, "{member}", author_reference.member);
+        // Ввод {member}
 
-        // Ввод {month2}
-        form.xml = await this.ReplacementParam(form.xml, "{month2}", await Month.IntToStr(date_today.getMonth()));
-        // Ввод {month2}
+        // Ввод {patent_member}
+        form.xml = await this.ReplacementParam(form.xml, "{patent_member}", author_reference.patent_member);
+        // Ввод {patent_member}
 
-        // Ввод {yr2}
-        form.xml = await this.ReplacementParam(form.xml, "{yr2}", date_today.getFullYear() % 100);
-        // Ввод {yr2}
+        // Ввод {inspector}
+        form.xml = await this.ReplacementParam(form.xml, "{inspector}", author_reference.commission.inspector);
+        // Ввод {inspector}
+
+        // Ввод {president}
+        form.xml = await this.ReplacementParam(form.xml, "{president}", author_reference.commission.president);
+        // Ввод {president}
 
         await this.SaveForm(form, key);
     }
@@ -211,23 +227,27 @@ class Docx {
             await this.SaveForm(form, key);
             return 0;
         }
-        let date_today = new Date();
+
+        if(author_reference.id_commission != null) {
+            author_reference.commission = (await Mysql.Request(`SELECT * FROM bree7e_cris_commissions WHERE id=${author_reference.id_commission}`))[0];
+        } else {
+            author_reference.commission = {};
+            author_reference.commission.name = "";
+            author_reference.commission.president = "";
+            author_reference.commission.inspector = "";
+        }
+
+        if(author_reference.id_commission_member != null) {
+            author_reference.commission_member = (await Mysql.Request(`SELECT * FROM users WHERE id=${author_reference.id_commission_member}`))[0];
+            author_reference.commission_member.fio = `${author_reference.commission_member.surname} ${author_reference.commission_member.name[0]}.${author_reference.commission_member.middlename[0]}.`;
+        } else {
+            author_reference.commission_member = {};
+            author_reference.commission_member.fio = ``;
+        }
         // Данные
 
-        // Ввод {day}
-        form.xml = await this.ReplacementParam(form.xml, "{day}", date_today.getDate());
-        // Ввод {day}
-
-        // Ввод {month}
-        form.xml = await this.ReplacementParam(form.xml, "{month}", await Month.IntToStr(date_today.getMonth()));
-        // Ввод {month}
-
-        // Ввод {year}
-        form.xml = await this.ReplacementParam(form.xml, "{year}", date_today.getFullYear());
-        // Ввод {year}
-
         // Ввод {expert}
-        form.xml = await this.ReplacementParam(form.xml, "{expert}", author_reference.expert);
+        form.xml = await this.ReplacementParam(form.xml, "{expert}", author_reference.member);
         // Ввод {expert}
 
         // Ввод {type_and_name}
@@ -246,17 +266,17 @@ class Docx {
         form.xml = await this.ReplacementParam(form.xml, "{type}", author_reference.publication_type);
         // Ввод {type}
 
-        // Ввод {day2}
-        form.xml = await this.ReplacementParam(form.xml, "{day2}", date_today.getDate());
-        // Ввод {day2}
+        // Ввод {member}
+        form.xml = await this.ReplacementParam(form.xml, "{member}", author_reference.member);
+        // Ввод {member}
 
-        // Ввод {month2}
-        form.xml = await this.ReplacementParam(form.xml, "{month2}", await Month.IntToStr(date_today.getMonth()));
-        // Ввод {month2}
+        // Ввод {inspector}
+        form.xml = await this.ReplacementParam(form.xml, "{inspector}", author_reference.commission.inspector);
+        // Ввод {inspector}
 
-        // Ввод {yr2}
-        form.xml = await this.ReplacementParam(form.xml, "{yr2}", date_today.getFullYear() % 100);
-        // Ввод {yr2}
+        // Ввод {president}
+        form.xml = await this.ReplacementParam(form.xml, "{president}", author_reference.commission.president);
+        // Ввод {president}
 
         await this.SaveForm(form, key);
     }
@@ -270,23 +290,19 @@ class Docx {
             await this.SaveForm(form, key);
             return 0;
         }
-        let date_today = new Date();
+
+        if(author_reference.id_commission != null) {
+            author_reference.commission = (await Mysql.Request(`SELECT * FROM bree7e_cris_commissions WHERE id=${author_reference.id_commission}`))[0];
+        } else {
+            author_reference.commission = {};
+            author_reference.commission.name = "";
+            author_reference.commission.president = "";
+            author_reference.commission.inspector = "";
+        }
         // Данные
 
-        // Ввод {day}
-        form.xml = await this.ReplacementParam(form.xml, "{day}", date_today.getDate());
-        // Ввод {day}
-
-        // Ввод {month}
-        form.xml = await this.ReplacementParam(form.xml, "{month}", await Month.IntToStr(date_today.getMonth()));
-        // Ввод {month}
-
-        // Ввод {year}
-        form.xml = await this.ReplacementParam(form.xml, "{year}", date_today.getFullYear());
-        // Ввод {year}
-
         // Ввод {expert}
-        form.xml = await this.ReplacementParam(form.xml, "{expert}", author_reference.expert);
+        form.xml = await this.ReplacementParam(form.xml, "{expert}", author_reference.member);
         // Ввод {expert}
 
         // Ввод {name}
@@ -306,17 +322,13 @@ class Docx {
         form.xml = await this.ReplacementParam(form.xml, "{date}", `${String(export_date.getDate()).padStart(2,'0')}.${String(export_date.getMonth()+1).padStart(2,'0')}.${export_date.getFullYear()}`);
         // Ввод {date}
 
-        // Ввод {day2}
-        form.xml = await this.ReplacementParam(form.xml, "{day2}", date_today.getDate());
-        // Ввод {day2}
+        // Ввод {inspector}
+        form.xml = await this.ReplacementParam(form.xml, "{inspector}", author_reference.commission.inspector);
+        // Ввод {inspector}
 
-        // Ввод {month2}
-        form.xml = await this.ReplacementParam(form.xml, "{month2}", await Month.IntToStr(date_today.getMonth()));
-        // Ввод {month2}
-
-        // Ввод {yr2}
-        form.xml = await this.ReplacementParam(form.xml, "{yr2}", date_today.getFullYear() % 100);
-        // Ввод {yr2}
+        // Ввод {president}
+        form.xml = await this.ReplacementParam(form.xml, "{president}", author_reference.commission.president);
+        // Ввод {president}
 
         await this.SaveForm(form, key);
     }
@@ -972,7 +984,11 @@ class Docx {
         if(!author_reference.inventions) author_reference.inventions = '';
         if(!author_reference.NIR) author_reference.NIR = '';
         if(!author_reference.information) author_reference.information = '';
-        if(!author_reference.expert) author_reference.expert = '';
+        if(!author_reference.member) author_reference.member = '';//Временно
+        if(!author_reference.patent_member) author_reference.patent_member = '';//Временно
+        if(!author_reference.id_commission) author_reference.id_commission = null;
+        if(!author_reference.id_commission_member) author_reference.id_commission_member = null;
+        if(!author_reference.id_commission_patent_member) author_reference.id_commission_patent_member = null;
         if(!author_reference.export_country) author_reference.export_country = '';
         if(!author_reference.export_event) author_reference.export_event = '';
         if(!author_reference.export_date) author_reference.export_date = '';
