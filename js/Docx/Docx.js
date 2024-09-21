@@ -176,28 +176,28 @@ class Docx {
         // Ввод {size}
 
         // Ввод {type}
-        form.xml = await this.ReplacementParam(form.xml, "{type}", author_reference.publication_type);
+        form.xml = await this.ReplacementParam(form.xml, "{type}", author_reference.information);
         // Ввод {type}
 
-        // Ввод {literary_sources}
-        form.xml = await this.ReplacementParam(form.xml, "{literary_sources}", author_reference.is_literary_sources ? 'Использовались литературные источники и документы, имеющие гриф, а также служебные материалы других организаций;' : 'Не использовались литературные источники и документы, имеющие гриф, а также служебные материалы других организаций;');
-        // Ввод {literary_sources}
+        // Ввод {contains_1}
+        form.xml = await this.ReplacementParam(form.xml, "{contains_1}", author_reference.contains_1 ? 'содержится' : 'не содержится');
+        // Ввод {contains_1}
 
-        // Ввод {information_not_rospatent}
-        form.xml = await this.ReplacementParam(form.xml, "{information_not_rospatent}", author_reference.is_information_not_rospatent ? 'Использовались сведения, которые могли бы составить предмет изобретения, но не оформлены заявками в Роспатент;' : 'Не использовались сведения, которые могли бы составить предмет изобретения, но не оформлены заявками в Роспатент;');
-        // Ввод {information_not_rospatent}
+        // Ввод {contains_2}
+        form.xml = await this.ReplacementParam(form.xml, "{contains_2}", author_reference.contains_2 ? 'содержатся' : 'не содержатся');
+        // Ввод {contains_2}
 
-        // Ввод {information_other_people}
-        form.xml = await this.ReplacementParam(form.xml, "{information_other_people}", author_reference.is_information_other_people ? 'Заимствованы материалы чужого научного произведения без указания источника заимствования;' : 'Не заимствованы материалы чужого научного произведения без указания источника заимствования;');
-        // Ввод {information_other_people}
+        // Ввод {contains_3}
+        form.xml = await this.ReplacementParam(form.xml, "{contains_3}", author_reference.contains_3 ? 'содержатся' : 'не содержатся');
+        // Ввод {contains_3}
 
-        // Ввод {information_inventions}
-        form.xml = await this.ReplacementParam(form.xml, "{information_inventions}", author_reference.is_information_inventions ? `Использовались сведения об изобретениях, защищённых авторскими свидетельствами или патентами, опубликованными в Бюллетене изобретений. Изобретения: ${author_reference.inventions};` : 'Не использовались сведения об изобретениях, защищённых авторскими свидетельствами или патентами, опубликованными в Бюллетене изобретений;');
-        // Ввод {information_inventions}
+        // Ввод {contains_4}
+        form.xml = await this.ReplacementParam(form.xml, "{contains_4}", author_reference.contains_4 ? 'следует' : 'не следует');
+        // Ввод {contains_4}
 
-        // Ввод {lock}
-        form.xml = await this.ReplacementParam(form.xml, "{lock}", author_reference.is_lock ? 'Есть запрет Роспатента на публикацию в открытой печати.' : 'Нет запрета Роспатента на публикацию в открытой печати.');
-        // Ввод {lock}
+        // Ввод {contains_5}
+        form.xml = await this.ReplacementParam(form.xml, "{contains_5}", author_reference.contains_5 ? 'может' : 'не может');
+        // Ввод {contains_5}
 
         // Ввод {member}
         form.xml = await this.ReplacementParam(form.xml, "{member}", author_reference.member);
@@ -263,8 +263,20 @@ class Docx {
         // Ввод {size}
 
         // Ввод {type}
-        form.xml = await this.ReplacementParam(form.xml, "{type}", author_reference.publication_type);
+        form.xml = await this.ReplacementParam(form.xml, "{type}", author_reference.information);
         // Ввод {type}
+
+        // Ввод {material}
+        form.xml = await this.ReplacementParam(form.xml, "{material}", author_reference.material);
+        // Ввод {material}
+
+        // Ввод {contains_2_1}
+        form.xml = await this.ReplacementParam(form.xml, "{contains_2_1}", author_reference.contains_2_1 ? 'содержатся' : 'не содержатся');
+        // Ввод {contains_2_1}
+
+        // Ввод {type_2}
+        form.xml = await this.ReplacementParam(form.xml, "{type_2}", author_reference.information);
+        // Ввод {type_2}
 
         // Ввод {member}
         form.xml = await this.ReplacementParam(form.xml, "{member}", author_reference.member);
@@ -399,6 +411,14 @@ class Docx {
         // Ввод {information}
         form.xml = await this.ReplacementParam(form.xml, "{information}", author_reference.information);
         // Ввод {information}
+
+        // Ввод {author}
+        form.xml = await this.ReplacementParam(form.xml, "{author}", author_reference.author.fio);
+        // Ввод {author}
+
+        // Ввод {zav_lab_otdel}
+        form.xml = await this.ReplacementParam(form.xml, "{zav_lab_otdel}", author_reference.zav_lab_otdel.fio);
+        // Ввод {zav_lab_otdel}
 
         await this.SaveForm(form, key);
     }
@@ -974,6 +994,7 @@ class Docx {
         if(typeof author_reference == 'undefined') {
             return null;
         }
+
         if(!author_reference.authors_str) author_reference.authors_str = '';
         if(!author_reference.positions_str) author_reference.positions_str = '';
         if(!author_reference.id_publication_type) author_reference.publication_type = '';
@@ -993,6 +1014,25 @@ class Docx {
         if(!author_reference.export_event) author_reference.export_event = '';
         if(!author_reference.export_date) author_reference.export_date = '';
         if(!author_reference.purpose_call) author_reference.purpose_call = '';
+        if(!author_reference.id_author) {
+            author_reference.id_author = null;
+            author_reference.author = {};
+            author_reference.author.fio = '';
+        }
+        else {
+            author_reference.author = (await Mysql.Request(`SELECT * FROM users WHERE id=${author_reference.id_author}`))[0];
+            author_reference.author.fio = `${author_reference.author.surname} ${author_reference.author.name[0]}.${author_reference.author.middlename[0]}.`;
+        }
+        if(!author_reference.id_zav_lab_otdel) {
+            author_reference.id_zav_lab_otdel = null;
+            author_reference.zav_lab_otdel = {};
+            author_reference.zav_lab_otdel.fio = '';
+        }
+        else {
+            author_reference.zav_lab_otdel = (await Mysql.Request(`SELECT * FROM users WHERE id=${author_reference.id_zav_lab_otdel}`))[0];
+            author_reference.zav_lab_otdel.fio = `${author_reference.zav_lab_otdel.surname} ${author_reference.zav_lab_otdel.name[0]}.${author_reference.zav_lab_otdel.middlename[0]}.`;
+        }
+        if(!author_reference.material) author_reference.material = 'не указано';
 
         return author_reference;
     }
