@@ -132,35 +132,10 @@ class Docx {
             await this.SaveForm(form, key);
             return 0;
         }
-
-        if(author_reference.id_commission != null) {
-            author_reference.commission = (await Mysql.Request(`SELECT * FROM bree7e_cris_commissions WHERE id=${author_reference.id_commission}`))[0];
-        } else {
-            author_reference.commission = {};
-            author_reference.commission.name = "";
-            author_reference.commission.president = "";
-            author_reference.commission.inspector = "";
-        }
-
-        if(author_reference.id_commission_member != null) {
-            author_reference.commission_member = (await Mysql.Request(`SELECT * FROM users WHERE id=${author_reference.id_commission_member}`))[0];
-            author_reference.commission_member.fio = `${author_reference.commission_member.surname} ${author_reference.commission_member.name[0]}.${author_reference.commission_member.middlename[0]}.`;
-        } else {
-            author_reference.commission_member = {};
-            author_reference.commission_member.fio = ``;
-        }
-
-        if(author_reference.id_commission_patent_member != null) {
-            author_reference.commission_patent_member = (await Mysql.Request(`SELECT * FROM users WHERE id=${author_reference.id_commission_patent_member}`))[0];
-            author_reference.commission_patent_member.fio = `${author_reference.commission_patent_member.surname} ${author_reference.commission_patent_member.name[0]}.${author_reference.commission_patent_member.middlename[0]}.`;
-        } else {
-            author_reference.commission_patent_member = {};
-            author_reference.commission_patent_member.fio = ``;
-        }
         // Данные
 
         // Ввод {expert}
-        form.xml = await this.ReplacementParam(form.xml, "{expert}", author_reference.member);
+        form.xml = await this.ReplacementParam(form.xml, "{expert}", author_reference.commission_member.fio);
         // Ввод {expert}
 
         // Ввод {type_and_name}
@@ -200,19 +175,19 @@ class Docx {
         // Ввод {contains_5}
 
         // Ввод {member}
-        form.xml = await this.ReplacementParam(form.xml, "{member}", author_reference.member);
+        form.xml = await this.ReplacementParam(form.xml, "{member}", author_reference.commission_member.iof);
         // Ввод {member}
 
         // Ввод {patent_member}
-        form.xml = await this.ReplacementParam(form.xml, "{patent_member}", author_reference.patent_member);
+        form.xml = await this.ReplacementParam(form.xml, "{patent_member}", author_reference.commission_patent_member.iof);
         // Ввод {patent_member}
 
         // Ввод {inspector}
-        form.xml = await this.ReplacementParam(form.xml, "{inspector}", author_reference.commission.inspector);
+        form.xml = await this.ReplacementParam(form.xml, "{inspector}", author_reference.commission.inspector.iof);
         // Ввод {inspector}
 
         // Ввод {president}
-        form.xml = await this.ReplacementParam(form.xml, "{president}", author_reference.commission.president);
+        form.xml = await this.ReplacementParam(form.xml, "{president}", author_reference.commission.president.iof);
         // Ввод {president}
 
         await this.SaveForm(form, key);
@@ -227,27 +202,10 @@ class Docx {
             await this.SaveForm(form, key);
             return 0;
         }
-
-        if(author_reference.id_commission != null) {
-            author_reference.commission = (await Mysql.Request(`SELECT * FROM bree7e_cris_commissions WHERE id=${author_reference.id_commission}`))[0];
-        } else {
-            author_reference.commission = {};
-            author_reference.commission.name = "";
-            author_reference.commission.president = "";
-            author_reference.commission.inspector = "";
-        }
-
-        if(author_reference.id_commission_member != null) {
-            author_reference.commission_member = (await Mysql.Request(`SELECT * FROM users WHERE id=${author_reference.id_commission_member}`))[0];
-            author_reference.commission_member.fio = `${author_reference.commission_member.surname} ${author_reference.commission_member.name[0]}.${author_reference.commission_member.middlename[0]}.`;
-        } else {
-            author_reference.commission_member = {};
-            author_reference.commission_member.fio = ``;
-        }
         // Данные
 
         // Ввод {expert}
-        form.xml = await this.ReplacementParam(form.xml, "{expert}", author_reference.member);
+        form.xml = await this.ReplacementParam(form.xml, "{expert}", author_reference.commission_member.fio);
         // Ввод {expert}
 
         // Ввод {type_and_name}
@@ -279,15 +237,15 @@ class Docx {
         // Ввод {type_2}
 
         // Ввод {member}
-        form.xml = await this.ReplacementParam(form.xml, "{member}", author_reference.member);
+        form.xml = await this.ReplacementParam(form.xml, "{member}", author_reference.commission_member.iof);
         // Ввод {member}
 
         // Ввод {inspector}
-        form.xml = await this.ReplacementParam(form.xml, "{inspector}", author_reference.commission.inspector);
+        form.xml = await this.ReplacementParam(form.xml, "{inspector}", author_reference.commission.inspector.iof);
         // Ввод {inspector}
 
         // Ввод {president}
-        form.xml = await this.ReplacementParam(form.xml, "{president}", author_reference.commission.president);
+        form.xml = await this.ReplacementParam(form.xml, "{president}", author_reference.commission.president.iof);
         // Ввод {president}
 
         await this.SaveForm(form, key);
@@ -302,19 +260,10 @@ class Docx {
             await this.SaveForm(form, key);
             return 0;
         }
-
-        if(author_reference.id_commission != null) {
-            author_reference.commission = (await Mysql.Request(`SELECT * FROM bree7e_cris_commissions WHERE id=${author_reference.id_commission}`))[0];
-        } else {
-            author_reference.commission = {};
-            author_reference.commission.name = "";
-            author_reference.commission.president = "";
-            author_reference.commission.inspector = "";
-        }
         // Данные
 
         // Ввод {expert}
-        form.xml = await this.ReplacementParam(form.xml, "{expert}", author_reference.member);
+        form.xml = await this.ReplacementParam(form.xml, "{expert}", author_reference.commission_member.fio);
         // Ввод {expert}
 
         // Ввод {name}
@@ -335,11 +284,11 @@ class Docx {
         // Ввод {date}
 
         // Ввод {inspector}
-        form.xml = await this.ReplacementParam(form.xml, "{inspector}", author_reference.commission.inspector);
+        form.xml = await this.ReplacementParam(form.xml, "{inspector}", author_reference.commission.inspector.iof);
         // Ввод {inspector}
 
         // Ввод {president}
-        form.xml = await this.ReplacementParam(form.xml, "{president}", author_reference.commission.president);
+        form.xml = await this.ReplacementParam(form.xml, "{president}", author_reference.commission.president.iof);
         // Ввод {president}
 
         await this.SaveForm(form, key);
@@ -413,11 +362,11 @@ class Docx {
         // Ввод {information}
 
         // Ввод {author}
-        form.xml = await this.ReplacementParam(form.xml, "{author}", author_reference.author.fio);
+        form.xml = await this.ReplacementParam(form.xml, "{author}", author_reference.author.iof);
         // Ввод {author}
 
         // Ввод {zav_lab_otdel}
-        form.xml = await this.ReplacementParam(form.xml, "{zav_lab_otdel}", author_reference.zav_lab_otdel.fio);
+        form.xml = await this.ReplacementParam(form.xml, "{zav_lab_otdel}", author_reference.zav_lab_otdel.iof);
         // Ввод {zav_lab_otdel}
 
         await this.SaveForm(form, key);
@@ -1005,11 +954,46 @@ class Docx {
         if(!author_reference.inventions) author_reference.inventions = '';
         if(!author_reference.NIR) author_reference.NIR = '';
         if(!author_reference.information) author_reference.information = '';
-        if(!author_reference.member) author_reference.member = '';//Временно
-        if(!author_reference.patent_member) author_reference.patent_member = '';//Временно
-        if(!author_reference.id_commission) author_reference.id_commission = null;
+        if(!author_reference.id_commission) {
+            author_reference.id_commission = null;
+            author_reference.commission = {};
+            author_reference.commission.president = {};
+            author_reference.commission.president.fio = "";
+            author_reference.commission.president.iof = "";
+            author_reference.commission.inspector = {};
+            author_reference.commission.inspector.fio = "";
+            author_reference.commission.inspector.iof = "";
+        } else {
+            author_reference.commission = (await Mysql.Request(`SELECT * FROM bree7e_cris_commissions WHERE id=${author_reference.id_commission}`))[0];
+            author_reference.commission.president = (await Mysql.Request(`SELECT * FROM users WHERE id=${author_reference.commission.id_president}`))[0];
+            author_reference.commission.president.fio = `${author_reference.commission.president.surname} ${author_reference.commission.president.name[0]}.${author_reference.commission.president.middlename[0]}.`;
+            author_reference.commission.president.iof = `${author_reference.commission.president.name[0]}.${author_reference.commission.president.middlename[0]}. ${author_reference.commission.president.surname}`;
+            author_reference.commission.inspector = (await Mysql.Request(`SELECT * FROM users WHERE id=${author_reference.commission.id_inspector}`))[0];
+            author_reference.commission.inspector.fio = `${author_reference.commission.inspector.surname} ${author_reference.commission.inspector.name[0]}.${author_reference.commission.inspector.middlename[0]}.`;
+            author_reference.commission.inspector.iof = `${author_reference.commission.inspector.name[0]}.${author_reference.commission.inspector.middlename[0]}. ${author_reference.commission.inspector.surname}`;
+        }
         if(!author_reference.id_commission_member) author_reference.id_commission_member = null;
         if(!author_reference.id_commission_patent_member) author_reference.id_commission_patent_member = null;
+        if(!author_reference.id_commission_member_) {
+            author_reference.id_commission_member_ = null;
+            author_reference.commission_member = {};
+            author_reference.commission_member.fio = "";
+            author_reference.commission_member.iof = "";
+        } else {
+            author_reference.commission_member = (await Mysql.Request(`SELECT * FROM users WHERE id=${author_reference.id_commission_member_}`))[0];
+            author_reference.commission_member.fio = `${author_reference.commission_member.surname} ${author_reference.commission_member.name[0]}.${author_reference.commission_member.middlename[0]}.`;
+            author_reference.commission_member.iof = `${author_reference.commission_member.name[0]}.${author_reference.commission_member.middlename[0]}. ${author_reference.commission_member.surname}`;
+        }
+        if(!author_reference.id_commission_patent_member_) {
+            author_reference.id_commission_patent_member_ = null;
+            author_reference.commission_patent_member = {};
+            author_reference.commission_patent_member.fio = "";
+            author_reference.commission_patent_member.iof = "";
+        } else {
+            author_reference.commission_patent_member = (await Mysql.Request(`SELECT * FROM users WHERE id=${author_reference.id_commission_patent_member_}`))[0];
+            author_reference.commission_patent_member.fio = `${author_reference.commission_patent_member.surname} ${author_reference.commission_patent_member.name[0]}.${author_reference.commission_patent_member.middlename[0]}.`;
+            author_reference.commission_patent_member.iof = `${author_reference.commission_patent_member.name[0]}.${author_reference.commission_patent_member.middlename[0]}. ${author_reference.commission_patent_member.surname}`;
+        }
         if(!author_reference.export_country) author_reference.export_country = '';
         if(!author_reference.export_event) author_reference.export_event = '';
         if(!author_reference.export_date) author_reference.export_date = '';
@@ -1022,15 +1006,18 @@ class Docx {
         else {
             author_reference.author = (await Mysql.Request(`SELECT * FROM users WHERE id=${author_reference.id_author}`))[0];
             author_reference.author.fio = `${author_reference.author.surname} ${author_reference.author.name[0]}.${author_reference.author.middlename[0]}.`;
+            author_reference.author.iof = `${author_reference.author.name[0]}.${author_reference.author.middlename[0]}. ${author_reference.author.surname}`;
         }
         if(!author_reference.id_zav_lab_otdel) {
             author_reference.id_zav_lab_otdel = null;
             author_reference.zav_lab_otdel = {};
             author_reference.zav_lab_otdel.fio = '';
+            author_reference.zav_lab_otdel.iof = '';
         }
         else {
             author_reference.zav_lab_otdel = (await Mysql.Request(`SELECT * FROM users WHERE id=${author_reference.id_zav_lab_otdel}`))[0];
             author_reference.zav_lab_otdel.fio = `${author_reference.zav_lab_otdel.surname} ${author_reference.zav_lab_otdel.name[0]}.${author_reference.zav_lab_otdel.middlename[0]}.`;
+            author_reference.zav_lab_otdel.iof = `${author_reference.zav_lab_otdel.name[0]}.${author_reference.zav_lab_otdel.middlename[0]}. ${author_reference.zav_lab_otdel.surname}`;
         }
         if(!author_reference.material) author_reference.material = 'не указано';
 
