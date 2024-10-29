@@ -4,11 +4,14 @@ const { Document, Packer, Paragraph, TextRun, Table, TableCell, TableRow, Vertic
 const fs = require('fs');
 const Mysql = require('./../Data/Mysql');
 const WordTransliteration = require('./../SubModules/WordTransliteration');
+const MyDate = require('./../SubModules/MyDate');
 const Month = require('./../SubModules/Month');
 const AdmZip = require("adm-zip");
 //-----------Подключаемые модули-----------//
 
 class Docx {
+    static get MAIN_PATH() {return '/var/www/ris'};
+
     static async CreateDocx(message) {
         let key = await this.GenerateDocx(message);
         return key;
@@ -129,7 +132,7 @@ class Docx {
         // Данные
         let author_reference = await Docx.GetAuthorReference(message.id_author_reference);
         if(author_reference == null) {
-            await this.SaveForm(form, key);
+            await this.SaveForm(form, key, 'Bree7e\\\\Cris\\\\Models\\\\AuthorReference', 'expert_opinion_docx', message.id_author_reference);
             return 0;
         }
         // Данные
@@ -190,7 +193,7 @@ class Docx {
         form.xml = await this.ReplacementParam(form.xml, "{president}", author_reference.commission.president.iof);
         // Ввод {president}
 
-        await this.SaveForm(form, key);
+        await this.SaveForm(form, key, 'Bree7e\\\\Cris\\\\Models\\\\AuthorReference', 'expert_opinion_docx', message.id_author_reference);
     }
 
     static async GenerateFormExportControl(message, key, path) {
@@ -199,7 +202,7 @@ class Docx {
         // Данные
         let author_reference = await Docx.GetAuthorReference(message.id_author_reference);
         if(author_reference == null) {
-            await this.SaveForm(form, key);
+            await this.SaveForm(form, key, 'Bree7e\\\\Cris\\\\Models\\\\AuthorReference', 'export_control_docx', message.id_author_reference);
             return 0;
         }
         // Данные
@@ -248,7 +251,7 @@ class Docx {
         form.xml = await this.ReplacementParam(form.xml, "{president}", author_reference.commission.president.iof);
         // Ввод {president}
 
-        await this.SaveForm(form, key);
+        await this.SaveForm(form, key, 'Bree7e\\\\Cris\\\\Models\\\\AuthorReference', 'export_control_docx', message.id_author_reference);
     }
 
     static async GenerateFormExportPermit(message, key, path) {
@@ -257,7 +260,7 @@ class Docx {
         // Данные
         let author_reference = await Docx.GetAuthorReference(message.id_author_reference);
         if(author_reference == null) {
-            await this.SaveForm(form, key);
+            await this.SaveForm(form, key, 'Bree7e\\\\Cris\\\\Models\\\\AuthorReference', 'export_permit_docx', message.id_author_reference);
             return 0;
         }
         // Данные
@@ -291,7 +294,7 @@ class Docx {
         form.xml = await this.ReplacementParam(form.xml, "{president}", author_reference.commission.president.iof);
         // Ввод {president}
 
-        await this.SaveForm(form, key);
+        await this.SaveForm(form, key, 'Bree7e\\\\Cris\\\\Models\\\\AuthorReference', 'export_permit_docx', message.id_author_reference);
     }
 
     static async GenerateFormAuthorReference(message, key, path) {
@@ -300,7 +303,7 @@ class Docx {
         // Данные
         let author_reference = await Docx.GetAuthorReference(message.id_author_reference);
         if(author_reference == null) {
-            await this.SaveForm(form, key);
+            await this.SaveForm(form, key, 'Bree7e\\\\Cris\\\\Models\\\\AuthorReference', 'docx', message.id_author_reference);
             return 0;
         }
         // Данные
@@ -369,7 +372,7 @@ class Docx {
         form.xml = await this.ReplacementParam(form.xml, "{zav_lab_otdel}", author_reference.zav_lab_otdel.iof);
         // Ввод {zav_lab_otdel}
 
-        await this.SaveForm(form, key);
+        await this.SaveForm(form, key, 'Bree7e\\\\Cris\\\\Models\\\\AuthorReference', 'docx', message.id_author_reference);
     }
 
     static async GenerateFormActivity(message, key, path) {
@@ -387,7 +390,7 @@ class Docx {
         // Изменение таблиц
         // Изменение таблиц
 
-        await this.SaveForm(form, key);
+        await this.SaveForm(form, key, null, null, null);
     }
 
     static async GenerateFormAward(message, key, path) {
@@ -405,7 +408,7 @@ class Docx {
         // Изменение таблиц
         // Изменение таблиц
 
-        await this.SaveForm(form, key);
+        await this.SaveForm(form, key, null, null, null);
     }
 
     static async GenerateFormEvent(message, key, path) {
@@ -423,7 +426,7 @@ class Docx {
         // Изменение таблиц
         // Изменение таблиц
 
-        await this.SaveForm(form, key);
+        await this.SaveForm(form, key, null, null, null);
     }
 
     static async GenerateFormGrand(message, key, path) {
@@ -472,7 +475,7 @@ class Docx {
         form.xml = await this.ReplacementTable(form.xml, params_table, data_table);
         // Ввод таблицы с {number_grant} {subject_grant} {date_grant} {status_grand} {function_grand}
 
-        await this.SaveForm(form, key);
+        await this.SaveForm(form, key, null, null, null);
     }
 
     static async GenerateFormInvolvement(message, key, path) {
@@ -526,7 +529,7 @@ class Docx {
         form.xml = await this.ReplacementTable(form.xml, params_table, data_table);
         // Ввод таблицы с {type_event} {status_report} {event_level} {topic_report} {date_place} {confirmation}
 
-        await this.SaveForm(form, key);
+        await this.SaveForm(form, key, null, null, null);
     }
 
     static async GenerateFormJournal(message, key, path) {
@@ -534,7 +537,7 @@ class Docx {
 
         
 
-        await this.SaveForm(form, key);
+        await this.SaveForm(form, key, null, null, null);
     }
 
     static async GenerateFormProceedings(message, key, path) {
@@ -792,7 +795,7 @@ class Docx {
         }
         // Ввод {list_pub4}
         //console.log(form.xml);
-        await this.SaveForm(form, key);
+        await this.SaveForm(form, key, null, null, null);
     }
 
     static async GenerateForm33(message, key, path) {
@@ -850,7 +853,7 @@ class Docx {
         form.xml = await this.ReplacementTable(form.xml, params, data);
         // Изменение таблиц
 
-        await this.SaveForm(form, key);
+        await this.SaveForm(form, key, null, null, null);
     }
 
     static async ReplacementTable(xml, params, data) {
@@ -916,9 +919,21 @@ class Docx {
         return form;
     }
 
-    static async SaveForm(form, key) {
+    static async SaveForm(form, key, attachment_type, field, attachment_id) {
+        let parts_name = ['671','72c','aae',`${(new Date).getTime()}`];
+        let disk_name = `${parts_name[0]+parts_name[1]+parts_name[2]+parts_name[3]}.docx`;
+        let file_name = `${key}.docx`;
+        let path = `${this.MAIN_PATH}/storage/app/uploads/public/${parts_name[0]}/${parts_name[1]}/${parts_name[2]}`;
+        let created_at = await MyDate.DateMysqlTimeStamp(new Date());
+
         form.updateFile("word/document.xml", form.xml);
-        form.writeZip(`/var/www/ris/docx/${key}.docx`);
+        form.writeZip(`${path}/${disk_name}`);
+        let file_stats = fs.statSync(`${path}/${disk_name}`);
+
+        if(attachment_type != null && field != null && attachment_id != null)
+            await Mysql.Request(`DELETE FROM system_files WHERE attachment_type='${attachment_type}' AND field='${field}' AND attachment_id=${attachment_id}`);
+        let system_file = await Mysql.Request(`INSERT INTO system_files(disk_name, file_name, file_size, content_type, field, attachment_id, attachment_type, is_public, created_at, updated_at) VALUES('${disk_name}', '${file_name}', ${file_stats.size}, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '${field}', ${attachment_id}, '${attachment_type}', 1, '${created_at}', '${created_at}')`);
+        await Mysql.Request(`UPDATE system_files SET sort_order=${system_file.insertId} WHERE id=${system_file.insertId}`);
     }
 
     static async GenerateKey(message) {
