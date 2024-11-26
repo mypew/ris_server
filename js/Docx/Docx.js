@@ -948,6 +948,7 @@ class Docx {
         await Mysql.Request(`UPDATE system_files SET sort_order=${system_file.insertId} WHERE id=${system_file.insertId}`);
         
         key = `${parts_name[0]}/${parts_name[1]}/${parts_name[2]}/${disk_name}`;
+        //let file = {key: key, name: file_name};
         
         return key;
     }
