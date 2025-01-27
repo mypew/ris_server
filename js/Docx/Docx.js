@@ -568,7 +568,7 @@ class Docx {
             if(publications[i].publication_type_id == 1)
                 c_pub++;
         }
-        form.xml = await this.ReplacementParam(form.xml, "{c_pub}", c_pub);
+        //form.xml = await this.ReplacementParam(form.xml, "{c_pub}", c_pub);
         if (c_pub > 0)
             form.xml = await this.ReplacementParam(form.xml, "{c_pub}", c_pub);
         else form.xml = await this.ReplacementParam(form.xml, "{c_pub}", "-");
@@ -616,6 +616,18 @@ class Docx {
                     if(publications[i].is_risc) {
                         let risc = `РИНЦ`;
                         dost.push(risc);
+                    }
+                    if(publications[i].is_wl) {
+                        let wl = `Белый список`;
+                        if(publications[i].quartile_wl != null)
+                            wl += ` ${publications[i].quartile_wl}`;
+                        dost.push(wl);
+                    }
+                    if(publications[i].is_vak) {
+                        let vak = `ВАК`;
+                        if(publications[i].quartile_vak != null)
+                            vak += ` ${publications[i].quartile_vak}`;
+                        dost.push(vak);
                     }
                     
                     if(dost.length > 0) {
@@ -714,6 +726,49 @@ class Docx {
                     data_list_pub2.push([]);
                     //console.log(publications[i]);
                     data_list_pub2[data_list_pub2.length-1][0] = `${data_list_pub2.length}. ${publications[i].authors} ${publications[i].title} // ${publications[i].journal}. ${publications[i].year}. С. ${publications[i].pages}`;
+
+                    let dost = [];
+                    if(publications[i].is_wos) {
+                        let wos = `Web of Science`;
+                        if(publications[i].quartile != null) {
+                            if(publications[i].quartile != "Q5")
+                                wos += ` ${publications[i].quartile}`;
+                            else wos += ` ESCI`;
+                        }
+                        dost.push(wos);
+                    }
+                    if(publications[i].is_scopus) {
+                        let scopus = `Scopus`;
+                        if(publications[i].quartile_scopus != null)
+                            scopus += ` ${publications[i].quartile_scopus}`;
+                        dost.push(scopus);
+                    }
+                    if(publications[i].is_risc) {
+                        let risc = `РИНЦ`;
+                        dost.push(risc);
+                    }
+                    if(publications[i].is_wl) {
+                        let wl = `Белый список`;
+                        if(publications[i].quartile_wl != null)
+                            wl += ` ${publications[i].quartile_wl}`;
+                        dost.push(wl);
+                    }
+                    if(publications[i].is_vak) {
+                        let vak = `ВАК`;
+                        if(publications[i].quartile_vak != null)
+                            vak += ` ${publications[i].quartile_vak}`;
+                        dost.push(vak);
+                    }
+                    
+                    if(dost.length > 0) {
+                        data_list_pub2[data_list_pub2.length-1][0] += ` (`
+                        for(let i = 0; i < dost.length; i++) {
+                            data_list_pub2[data_list_pub2.length-1][0] += `${dost[i]}`;
+                            if(i != (dost.length-1))
+                                data_list_pub2[data_list_pub2.length-1][0] += `,`;
+                        }
+                        data_list_pub2[data_list_pub2.length-1][0] += `)`
+                    }
                 }
             }
             form.xml = await this.ReplacementTable(form.xml, params_list_pub2, data_list_pub2);
