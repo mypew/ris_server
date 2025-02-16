@@ -34,8 +34,12 @@ class Docx {
             key = `activity`;
             key = await this.GenerateFormActivity(message, key, "../docx/form/form_activity.docx");
         } else if (message.form == 'award') {
-            key = `award`;
-            key = await this.GenerateFormAward(message, key, "../docx/form/form_award.docx");
+            if (typeof message.author_id == 'undefined')
+                return "Error";
+            else {
+                key = `${message.form}_${message.author_id}_${new Date().getTime()}`;
+                key = await this.GenerateFormAward(message, key, "../docx/form/form_award.docx");
+            }
         } else if (message.form == 'event') {
             key = `event`;
             key = await this.GenerateFormEvent(message, key, "../docx/form/form_event.docx");
@@ -401,17 +405,30 @@ class Docx {
     static async GenerateFormAward(message, key, path) {
         let form = await this.GenerateForm(path);
 
-        // Данные для переменных
-        // Данные для переменных
+        // Данные
+        let awards = await Mysql.Request(`SELECT b.name, a.aw_date, a.title, a.aw_num FROM bree7e_cris_awards as a LEFT JOIN bree7e_cris_award_types as b ON a.id_award_type = b.id WHERE id_author = ${message.author_id}`);
+        let author = await Mysql.Request(`SELECT name, surname, middlename FROM users WHERE id = ${message.author_id}`);
+        let params_table = ["{title}","{date}","{document}"];
+        let data_table = [];
+        // Данные
 
-        // Изменение переменных
-        // Изменение переменных
+        // Изменения
+        form.xml = await this.ReplacementParam(form.xml, "{fio}", `${author[0].surname} ${author[0].name} ${author[0].middlename}`);
 
-        // Данные для таблиц
-        // Данные для таблиц
+        for(let i = 0; i < awards.length; i++) {
+            data_table[data_table.length] = [];
+            data_table[data_table.length-1][0] = awards[i].name;
 
-        // Изменение таблиц
-        // Изменение таблиц
+            let aw_date = (new Date(awards[i].aw_date));
+            if(awards[i].aw_date != null)
+                data_table[data_table.length-1][1] = String(aw_date.getDate()).padStart(2,'0')+"."+String((aw_date.getMonth()+1)).padStart(2,'0')+"."+aw_date.getFullYear();
+            else data_table[data_table.length-1][1] = ' ';
+
+            data_table[data_table.length-1][2] = `${awards[i].title} ${awards[i].aw_num}`;
+        }
+
+        form.xml = await this.ReplacementTable(form.xml, params_table, data_table);
+        // Изменения
 
         key = await this.SaveForm(form, key, null, null, null);
         return key;
@@ -668,6 +685,49 @@ class Docx {
                     data_list_mon.push([]);
                     //console.log(publications[i]);
                     data_list_mon[data_list_mon.length-1][0] = `${data_list_mon.length}. ${publications[i].authors} ${publications[i].title} // ${publications[i].journal}. ${publications[i].year}. С. ${publications[i].pages}`;
+
+                    let dost = [];
+                    if(publications[i].is_wos) {
+                        let wos = `Web of Science`;
+                        if(publications[i].quartile != null) {
+                            if(publications[i].quartile != "Q5")
+                                wos += ` ${publications[i].quartile}`;
+                            else wos += ` ESCI`;
+                        }
+                        dost.push(wos);
+                    }
+                    if(publications[i].is_scopus) {
+                        let scopus = `Scopus`;
+                        if(publications[i].quartile_scopus != null)
+                            scopus += ` ${publications[i].quartile_scopus}`;
+                        dost.push(scopus);
+                    }
+                    if(publications[i].is_risc) {
+                        let risc = `РИНЦ`;
+                        dost.push(risc);
+                    }
+                    if(publications[i].is_wl) {
+                        let wl = `Белый список`;
+                        if(publications[i].quartile_wl != null)
+                            wl += ` ${publications[i].quartile_wl}`;
+                        dost.push(wl);
+                    }
+                    if(publications[i].is_vak) {
+                        let vak = `ВАК`;
+                        if(publications[i].quartile_vak != null)
+                            vak += ` ${publications[i].quartile_vak}`;
+                        dost.push(vak);
+                    }
+                    
+                    if(dost.length > 0) {
+                        data_list_mon[data_list_mon.length-1][0] += ` (`
+                        for(let i = 0; i < dost.length; i++) {
+                            data_list_mon[data_list_mon.length-1][0] += `${dost[i]}`;
+                            if(i != (dost.length-1))
+                                data_list_mon[data_list_mon.length-1][0] += `,`;
+                        }
+                        data_list_mon[data_list_mon.length-1][0] += `)`
+                    }
                 }
             }
             form.xml = await this.ReplacementTable(form.xml, params_list_mon, data_list_mon);
