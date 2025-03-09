@@ -572,7 +572,7 @@ class Docx {
 
         // Данные
         let user = await Mysql.Request(`SELECT name, surname, middlename FROM users WHERE id = ${message.author_id}`);
-        let publications = await Mysql.Request(`SELECT pages, publication_type_id, number, year, title, journal, authors, is_wos, is_scopus, is_risc, is_editable, quartile, quartile_scopus, doi FROM bree7e_cris_publications where id in (SELECT publication_id FROM bree7e_cris_authors_publications where rb_author_id = ${message.author_id} and reportYear >= ${message.from_year} and reportYear <= ${message.to_year});`);
+        let publications = await Mysql.Request(`SELECT pages, publication_type_id, number, year, title, journal, authors, is_wos, is_scopus, is_risc, is_editable, quartile, quartile_scopus, doi FROM bree7e_cris_publications where id in (SELECT publication_id FROM bree7e_cris_authors_publications where rb_author_id = ${message.author_id} and year >= ${message.from_year} and year <= ${message.to_year});`);
         // Данные
 
         // Ввод {fio}

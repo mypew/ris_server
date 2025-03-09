@@ -11,7 +11,9 @@ class MyDate {
   static async DateMysqlTimeStamp(date) {
     let result;
 
-    result = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')} ${date.getHours()+8}:${date.getMinutes()}:${date.getSeconds()}`;
+    date.setHours(date.getHours() + 8);
+
+    result = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 
     return result;
   }
