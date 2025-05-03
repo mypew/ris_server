@@ -25,6 +25,16 @@ class Get {
       req.query.type_request = 'GET /docx';
       WorkerController.HandleGetRequest(req, res);
     });
+    /**  */
+    this.app.get('/ris', (req, res) => {
+      req.query.type_request = 'GET /ris';
+      WorkerController.HandleGetRequest(req, res);
+    });
+    /**  */
+    this.app.get('/bibtex', (req, res) => {
+      req.query.type_request = 'GET /bibtex';
+      WorkerController.HandleGetRequest(req, res);
+    });
   }
 
   /**
