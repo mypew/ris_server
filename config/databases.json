@@ -1,0 +1,44 @@
+{
+  "development": {
+    "username": "root",
+    "password": "p*wkFMvjs48F*f_j",
+    "database": "ris",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "logging": true,
+    "timezone": "+08:00",
+    "define": {
+      "timestamps": true,
+      "createdAt": "created_at",
+      "updatedAt": "updated_at"
+    }
+  },
+  "test": {
+    "username": "root",
+    "password": "p*wkFMvjs48F*f_j",
+    "database": "ris",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "logging": true,
+    "timezone": "+08:00",
+    "define": {
+      "timestamps": true,
+      "createdAt": "created_at",
+      "updatedAt": "updated_at"
+    }
+  },
+  "production": {
+    "username": "root",
+    "password": "p*wkFMvjs48F*f_j",
+    "database": "ris",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "logging": true,
+    "timezone": "+08:00",
+    "define": {
+      "timestamps": true,
+      "createdAt": "created_at",
+      "updatedAt": "updated_at"
+    }
+  }
+}

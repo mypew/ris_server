@@ -3,6 +3,7 @@ const express = require('express');
 const fs = require('fs');
 const https = require('https');
 const Get = require('./Get');
+const Post = require('./Post');
 const WorkerController = require('./WorkerController');
 //-----------Подключаемые модули-----------//
 
@@ -37,6 +38,7 @@ class Server {
     //-------------------------------------------------------//
     this.StartListen();
     this.CreateGetRequest();
+    this.CreatePostRequest();
     this.CreateWorkers();
     //-------------------------------------------------------//
 
@@ -66,6 +68,16 @@ class Server {
     //-------------------------------------------------------//
 
     console.log(`Обработчики Get запросов запущены.`);
+  }
+
+  /**
+   * Функция, которая запускает обработчик всех Post запросов к серверу
+   */
+  CreatePostRequest() {
+    new Post(this.app);
+    //-------------------------------------------------------//
+
+    console.log(`Обработчики Post запросов запущены.`);
   }
 
   /**

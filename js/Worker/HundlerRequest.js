@@ -2,6 +2,9 @@
 const Docx = require('./../Docx/Docx');
 const Ris = require('./../BibStan/Ris');
 const Bibtex = require('./../BibStan/Bibtex');
+const Post = require('./../../src/modules/HTTP/Post');
+const Department = require('./../../src/models/Department');
+const User = require('./../../src/models/User');
 //-----------Подключаемые модули-----------//
 
 /**
@@ -20,6 +23,10 @@ class HundlerRequest {
                 return await HundlerRequest.GetRis(message);
             case "GET /bibtex":
                 return await HundlerRequest.GetBibtex(message);
+            case "POST /departments":
+                return await Post.CRUD(message, Department);
+            case "POST /users":
+                return await Post.CRUD(message, User);
         }
         return { message: "request is not defined" };
     }

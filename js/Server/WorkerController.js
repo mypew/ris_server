@@ -88,11 +88,12 @@ class WorkerController {
   }
 
   /**
-   * Функция, которая принимает данные Get запроса,
+   * Функция, которая принимает данные запроса,
    * отдаёт его на обработку свободному дочернему процессу-работнику,
    * а после отправляет результат клиенту.
    */
-  static async HandleGetRequest(req, res) {
+  static async HandleRequest(req, res) {
+    req.query.body = req.body;
     let result = await WorkerController.Send(req.query);
     res.send(result);
   }

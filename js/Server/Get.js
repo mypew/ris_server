@@ -23,17 +23,17 @@ class Get {
     /**  */
     this.app.get('/docx', (req, res) => {
       req.query.type_request = 'GET /docx';
-      WorkerController.HandleGetRequest(req, res);
+      WorkerController.HandleRequest(req, res);
     });
     /**  */
     this.app.get('/ris', (req, res) => {
       req.query.type_request = 'GET /ris';
-      WorkerController.HandleGetRequest(req, res);
+      WorkerController.HandleRequest(req, res);
     });
     /**  */
     this.app.get('/bibtex', (req, res) => {
       req.query.type_request = 'GET /bibtex';
-      WorkerController.HandleGetRequest(req, res);
+      WorkerController.HandleRequest(req, res);
     });
   }
 
