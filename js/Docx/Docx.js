@@ -316,6 +316,10 @@ class Docx {
         // Данные
 
         // Ввод {authors}
+        form.xml = await this.ReplacementParam(form.xml, "{author_str}", author_reference.author_str);
+        // Ввод {authors}
+
+        // Ввод {authors}
         form.xml = await this.ReplacementParam(form.xml, "{authors}", author_reference.authors_str);
         // Ввод {authors}
 

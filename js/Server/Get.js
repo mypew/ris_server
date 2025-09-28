@@ -35,6 +35,10 @@ class Get {
       req.query.type_request = 'GET /bibtex';
       WorkerController.HandleRequest(req, res);
     });
+    this.app.get('/bg_text', (req, res) => {
+      req.query.type_request = 'GET /bg_text';
+      WorkerController.HandleRequest(req, res);
+    });
   }
 
   /**

@@ -23,6 +23,8 @@ class HundlerRequest {
                 return await HundlerRequest.GetRis(message);
             case "GET /bibtex":
                 return await HundlerRequest.GetBibtex(message);
+            case "GET /bg_text":
+                return await HundlerRequest.GetBGText(message);
             case "POST /departments":
                 return await Post.CRUD(message, Department);
             case "POST /users":
@@ -81,6 +83,24 @@ class HundlerRequest {
 
         let finish = new Date().getTime();
         console.log(`GetBibtex обработан за {${(finish - start) / 1000}} сек.`);
+
+        return data;
+    }
+
+    /**
+     * 
+     */
+    static async GetBibtex(message) {
+        let start = new Date().getTime();
+        console.log(`Обрабатываем GetBGText запрос...`);
+        console.log(message);
+
+        //-------------------------------------------------------//
+        let data = 'test';//await BGText.Get(message);
+        //-------------------------------------------------------//
+
+        let finish = new Date().getTime();
+        console.log(`GetBGText обработан за {${(finish - start) / 1000}} сек.`);
 
         return data;
     }
