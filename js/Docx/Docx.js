@@ -141,16 +141,30 @@ class Docx {
         }
         // Данные
 
+        let expert = author_reference.commission_member;
+
+        let expert_fio = expert.fio + '(';
+
+        for (let [key, position] of expert.positions ?? []) 
+        { 
+            if (key > 0) 
+            {
+                expert_fio += ', '
+            } 
+            expert_fio += trim(position.shortname);
+        }
+        expert_fio += ', ИДСТУ СО РАН)';
+
+        // Ввод {expert}
+        form.xml = await this.ReplacementParam(form.xml, "{expert}", expert_fio);
+        // Ввод {expert}
+
         // Ввод {author}
         form.xml = await this.ReplacementParam(form.xml, "{author}", author_reference.author_str);
         // Ввод {author}
 
-        // Ввод {expert}
-        form.xml = await this.ReplacementParam(form.xml, "{expert}", author_reference.commission_member.fio);
-        // Ввод {expert}
-
         // Ввод {type_and_name}
-        form.xml = await this.ReplacementParam(form.xml, "{type_and_name}", `${author_reference.publication_type} ${author_reference.full_name_publication},`);
+        form.xml = await this.ReplacementParam(form.xml, "{type_and_name}", `${author_reference.publication_type} ${author_reference.full_name_publication}`);
         // Ввод {type_and_name}
 
         // Ввод {authors}
@@ -231,13 +245,17 @@ class Docx {
         expert_fio += ', ИДСТУ СО РАН)';
 
         // Ввод {expert}
-        form.xml = await this.ReplacementParam(form.xml, "{expert}", author_reference.commission_member.fio);
+        form.xml = await this.ReplacementParam(form.xml, "{expert}", expert_fio);
         // Ввод {expert}
 
         // Ввод {type_and_name}
-        form.xml = await this.ReplacementParam(form.xml, "{type_and_name}", `${author_reference.publication_type} ${author_reference.full_name_publication},`);
+        form.xml = await this.ReplacementParam(form.xml, "{type_and_name}", `${author_reference.publication_type} ${author_reference.full_name_publication}`);
         // Ввод {type_and_name}
 
+        // Ввод {author}
+        form.xml = await this.ReplacementParam(form.xml, "{author}", author_reference.author_str);
+        // Ввод {author}
+        
         // Ввод {authors}
         form.xml = await this.ReplacementParam(form.xml, "{authors}", `${author_reference.authors_str},`);
         // Ввод {authors}
@@ -289,13 +307,27 @@ class Docx {
         }
         // Данные
 
+        let expert = author_reference.commission_member;
+
+        let expert_fio = expert.fio + '(';
+
+        for (let [key, position] of expert.positions ?? []) 
+        { 
+            if (key > 0) 
+            {
+                expert_fio += ', '
+            } 
+            expert_fio += trim(position.shortname);
+        }
+        expert_fio += ', ИДСТУ СО РАН)';
+
+        // Ввод {expert}
+        form.xml = await this.ReplacementParam(form.xml, "{expert}", expert_fio);
+        // Ввод {expert}
+
         // Ввод {author}
         form.xml = await this.ReplacementParam(form.xml, "{author}", author_reference.author_str);
         // Ввод {author}
-
-        // Ввод {expert}
-        form.xml = await this.ReplacementParam(form.xml, "{expert}", author_reference.commission_member.fio);
-        // Ввод {expert}
 
         // Ввод {name}
         form.xml = await this.ReplacementParam(form.xml, "{name}", `${author_reference.publication_type} ${author_reference.full_name_publication}`);
@@ -337,9 +369,9 @@ class Docx {
         }
         // Данные
 
-        // Ввод {authors}
+        // Ввод {author_str}
         form.xml = await this.ReplacementParam(form.xml, "{author_str}", author_reference.author_str);
-        // Ввод {authors}
+        // Ввод {author_str}
 
         // Ввод {authors}
         form.xml = await this.ReplacementParam(form.xml, "{authors}", author_reference.authors_str);
