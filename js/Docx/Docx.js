@@ -215,7 +215,7 @@ class Docx {
         {
             form.xml = await this.ReplacementParam(form.xml, "{expert_date_day}", '');
             form.xml = await this.ReplacementParam(form.xml, "{expert_date_month}", '');
-            form.xml = await this.ReplacementParam(form.xml, "{expert_date_year}", '');
+            form.xml = await this.ReplacementParam(form.xml, "{expert_date_year}", '20');
         }
         // Ввод {expert_date}
 
