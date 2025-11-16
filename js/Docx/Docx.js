@@ -200,23 +200,18 @@ class Docx {
         // Ввод {contains_5}
 
         // Ввод {expert_date}
+        let expert_date = new Date();
         if (author_reference.expert_date)
         {
-            let expert_date = (new Date(author_reference.expert_date));
-            let expert_date_day = String(expert_date.getDate()).padStart(2,'0');
-            let formatter = new Intl.DateTimeFormat('ru-RU', { month: 'long' }); 
-            let expert_date_month = formatter.format(expert_date);
-            let expert_date_year = expert_date.getFullYear();
-            form.xml = await this.ReplacementParam(form.xml, "{expert_date_day}", expert_date_day);
-            form.xml = await this.ReplacementParam(form.xml, "{expert_date_month}", expert_date_month);
-            form.xml = await this.ReplacementParam(form.xml, "{expert_date_year}", expert_date_year);
+            expert_date = (new Date(author_reference.expert_date));   
         }
-        else
-        {
-            form.xml = await this.ReplacementParam(form.xml, "{expert_date_day}", '');
-            form.xml = await this.ReplacementParam(form.xml, "{expert_date_month}", '');
-            form.xml = await this.ReplacementParam(form.xml, "{expert_date_year}", '20');
-        }
+        let expert_date_day = String(expert_date.getDate()).padStart(2,'0');
+        let formatter = new Intl.DateTimeFormat('ru-RU', { month: 'long' }); 
+        let expert_date_month = formatter.format(expert_date);
+        let expert_date_year = expert_date.getFullYear();
+        form.xml = await this.ReplacementParam(form.xml, "{expert_date_day}", expert_date_day);
+        form.xml = await this.ReplacementParam(form.xml, "{expert_date_month}", expert_date_month);
+        form.xml = await this.ReplacementParam(form.xml, "{expert_date_year}", expert_date_year);
         // Ввод {expert_date}
 
         // Ввод {member}
