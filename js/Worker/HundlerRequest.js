@@ -80,6 +80,7 @@ class HundlerRequest {
         //-------------------------------------------------------//
         let data = await Bibtex.Get(message);
         //-------------------------------------------------------//
+        console.log(data);
 
         let finish = new Date().getTime();
         console.log(`GetBibtex обработан за {${(finish - start) / 1000}} сек.`);
@@ -90,7 +91,7 @@ class HundlerRequest {
     /**
      * 
      */
-    static async GetBibtex(message) {
+    static async GetBGText(message) {
         let start = new Date().getTime();
         console.log(`Обрабатываем GetBGText запрос...`);
         console.log(message);
