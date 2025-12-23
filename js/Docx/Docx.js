@@ -710,7 +710,7 @@ class Docx {
                     if(publications[i].is_wl) {
                         let wl = `Белый список`;
                         if(publications[i].quartile_wl != null)
-                            wl += ` ${publications[i].quartile_wl}`;
+                            wl = `${publications[i].quartile_wl}`;
                         dost.push(wl);
                     }
                     if(publications[i].is_vak) {
@@ -782,7 +782,7 @@ class Docx {
                     if(publications[i].is_wl) {
                         let wl = `Белый список`;
                         if(publications[i].quartile_wl != null)
-                            wl += ` ${publications[i].quartile_wl}`;
+                            wl = `${publications[i].quartile_wl}`;
                         dost.push(wl);
                     }
                     if(publications[i].is_vak) {
@@ -883,7 +883,7 @@ class Docx {
                     if(publications[i].is_wl) {
                         let wl = `Белый список`;
                         if(publications[i].quartile_wl != null)
-                            wl += ` ${publications[i].quartile_wl}`;
+                            wl = `${publications[i].quartile_wl}`;
                         dost.push(wl);
                     }
                     if(publications[i].is_vak) {
